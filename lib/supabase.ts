@@ -7,33 +7,43 @@ export type Database = {
         Row: Lead
         Insert: Omit<Lead, 'id' | 'created_at'>
         Update: Partial<Omit<Lead, 'id' | 'created_at'>>
+        Relationships: []
       }
       campaigns: {
         Row: Campaign
         Insert: Omit<Campaign, 'id' | 'created_at'>
         Update: Partial<Omit<Campaign, 'id' | 'created_at'>>
+        Relationships: []
       }
       creatives: {
         Row: Creative
         Insert: Omit<Creative, 'id' | 'created_at'>
         Update: Partial<Omit<Creative, 'id' | 'created_at'>>
+        Relationships: []
       }
       contracts: {
         Row: Contract
         Insert: Omit<Contract, 'id' | 'created_at'>
         Update: Partial<Omit<Contract, 'id' | 'created_at'>>
+        Relationships: []
       }
       token_balances: {
         Row: TokenBalance
         Insert: Omit<TokenBalance, 'id'>
         Update: Partial<Omit<TokenBalance, 'id'>>
+        Relationships: []
       }
       agent_runs: {
         Row: AgentRun
         Insert: Omit<AgentRun, 'id' | 'created_at'>
         Update: Partial<Omit<AgentRun, 'id' | 'created_at'>>
+        Relationships: []
       }
     }
+    Views: Record<string, never>
+    Functions: Record<string, never>
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
 }
 

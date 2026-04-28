@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase, type Campaign } from '@/lib/supabase'
 
 export const revalidate = 120
 
@@ -8,7 +8,7 @@ export default async function CampanhasPage() {
     .select('*')
     .order('created_at', { ascending: false })
 
-  const all = campaigns ?? []
+  const all: Campaign[] = (campaigns as Campaign[]) ?? []
   const ativos = all.filter(c => c.status === 'ativo')
 
   return (

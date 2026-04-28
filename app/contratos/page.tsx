@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase, type Contract } from '@/lib/supabase'
 import { format } from 'date-fns'
 
 export const revalidate = 120
@@ -10,7 +10,7 @@ export default async function ContratosPage() {
     .order('signed_at', { ascending: false })
     .limit(200)
 
-  const all = contracts ?? []
+  const all: Contract[] = (contracts as Contract[]) ?? []
   const totalValue = all.reduce((s, c) => s + (c.valor ?? 0), 0)
   const ticketMedio = all.length > 0 ? totalValue / all.length : 0
 

@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase, type AgentRun } from '@/lib/supabase'
 import { format } from 'date-fns'
 
 export const revalidate = 60
@@ -10,7 +10,7 @@ export default async function AgentesPage() {
     .order('created_at', { ascending: false })
     .limit(100)
 
-  const all = runs ?? []
+  const all: AgentRun[] = (runs as AgentRun[]) ?? []
   const completed = all.filter(r => r.status === 'completed').length
   const failed = all.filter(r => r.status === 'failed').length
 

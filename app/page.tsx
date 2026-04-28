@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase, type Lead, type Contract, type AgentRun } from '@/lib/supabase'
 import MetricsCard from '@/components/MetricsCard'
 import { format, subDays } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
@@ -6,7 +6,6 @@ import { ptBR } from 'date-fns/locale'
 export const revalidate = 300 // revalidate every 5 min
 
 async function getDashboardMetrics() {
-  const today = format(new Date(), 'yyyy-MM-dd')
   const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd')
 
   const [leadsRes, contractsRes, agentRunsRes] = await Promise.all([
@@ -19,9 +18,12 @@ async function getDashboardMetrics() {
       .limit(5),
   ])
 
-  const leads = leadsRes.data ?? []
-  const contracts = contractsRes.data ?? []
-  const agentRuns = agentRunsRes.data ?? []
+  const leads: Pick<Lead, 'id' | 'status' | 'utm_campaign' | 'faturamento' | 'submitted_at'>[] =
+    (leadsRes.data as Pick<Lead, 'id' | 'status' | 'utm_campaign' | 'faturamento' | 'submitted_at'>[]) ?? []
+  const contracts: Pick<Contract, 'id' | 'valor' | 'signed_at'>[] =
+    (contractsRes.data as Pick<Contract, 'id' | 'valor' | 'signed_at'>[]) ?? []
+  const agentRuns: Pick<AgentRun, 'id' | 'task_name' | 'status' | 'created_at'>[] =
+    (agentRunsRes.data as Pick<AgentRun, 'id' | 'task_name' | 'status' | 'created_at'>[]) ?? []
 
   const mqls = leads.filter(l => l.status === 'MQL')
   const disq = leads.filter(l => l.status === 'Desqualificado')

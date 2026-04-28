@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase, type Lead } from '@/lib/supabase'
 import { format } from 'date-fns'
 
 export const revalidate = 120
@@ -10,7 +10,7 @@ export default async function LeadsPage() {
     .order('submitted_at', { ascending: false })
     .limit(200)
 
-  const all = leads ?? []
+  const all: Lead[] = (leads as Lead[]) ?? []
   const mqls = all.filter(l => l.status === 'MQL')
   const disq = all.filter(l => l.status === 'Desqualificado')
 
