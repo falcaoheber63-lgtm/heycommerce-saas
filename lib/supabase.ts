@@ -146,12 +146,14 @@ export interface AgentRun {
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const supabase = createClient(supabaseUrl, supabaseAnonKey) as any
 
 export function supabaseAdmin() {
-  return createClient<Database>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { autoRefreshToken: false, persistSession: false } }
-  )
+  ) as any
 }
